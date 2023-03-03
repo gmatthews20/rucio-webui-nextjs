@@ -6,6 +6,7 @@
  */
 const USECASE_FACTORY = {
     USERPASS_LOGIN: Symbol.for("Factory<UserPassLoginUseCase>"),
+    MULTIVO: Symbol.for("Factory<MultiVOUseCase>"),
 }
 
 export default USECASE_FACTORY;

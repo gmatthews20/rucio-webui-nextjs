@@ -3,6 +3,6 @@ export type LoginViewModel = {
     oidcEnabled: boolean;
     oidcProviders: OIDCProvider[];
     multiVOEnabled: boolean;
-    voList: string[];
+    voList: VO[];
     isLoggedIn: boolean;
 }

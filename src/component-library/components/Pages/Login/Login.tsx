@@ -6,13 +6,14 @@ import { H1 } from '../../Text/Headings/H1';
 import { Collapsible } from '../../Helpers/Collapsible';
 import { CredentialInput } from './CredentialInput';
 import { LoginViewModel } from '../../../../lib/infrastructure/data/view-model/login.d';
+import { VO } from '@/lib/core/entity/auth-models';
 
 
 export type ShowLoginType = "none" | "x509" | "userpass"
 
 export interface LoginPageResponse {
     loginType: ShowLoginType
-    vo: string
+    vo: VO
     username: string
     password: string
 }
@@ -50,7 +51,7 @@ export const Login = ({
     }
 
     // VO setting
-    const [vosetting, set_vosetting] = useState<number>(1)
+    const [vosetting, set_vosetting] = useState<number>(0)
 
     // Username and password
     const [unamesetting, set_unamesetting] = useState<string>("")
@@ -80,7 +81,7 @@ export const Login = ({
             </div>
             <div className="flex flex-col space-y-2">
                 <Collapsible show={loginViewModel.multiVOEnabled}>
-                    <Tabs tabs={loginViewModel.voList} active={1} handleClick={(event: any) => {set_vosetting(event.target.id)}}/>
+                    <Tabs tabs={loginViewModel.voList.map(voList => voList.name)} active={0} handleClick={(event: any) => {set_vosetting(event.target.id)}}/>
                 </Collapsible>
                 <div className="flex justify-center flex-col space-y-4">
                     <Collapsible show={loginViewModel.oidcEnabled}>

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Login as LoginStory, LoginPageProps, LoginPageResponse, ShowLoginType} from "@/component-library/components/Pages/Login/Login";
+import { VO } from "@/lib/core/entity/auth-models";
 
 
 export default function Login() {
@@ -35,10 +36,11 @@ export default function Login() {
             )
     }, []);
 
-    const handleuserpassSubmit = async (username: string, password: string) => {
+    const handleuserpassSubmit = async (username: string, password: string, vo: VO) => {
         const body = {
             username: username,
-            password: password
+            password: password,
+            vo: vo
         }
         try {
             const res = await fetch('/api/auth/userpass', {
@@ -67,10 +69,10 @@ export default function Login() {
     const handleSubmit = (
         response: LoginPageResponse
     ) => {
-        console.log(`Username: ${response.username}, Password: ${response.password}, VO: ${response.vo}, Login Type: ${response.loginType}`);
+        console.log(`Username: ${response.username}, Password: ${response.password}, VO: ${response.vo.shortName}, Login Type: ${response.loginType}`);
         switch(response.loginType){
             case "userpass":
-                handleuserpassSubmit(response.username, response.password)
+                handleuserpassSubmit(response.username, response.password, response.vo)
                 break;
             case "x509":
                 console.log("x509 login not yet implemented")

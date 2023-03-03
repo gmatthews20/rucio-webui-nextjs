@@ -7,8 +7,14 @@ import { injectable } from "inversify";
  * Provides an implementation of the {@link AuthServerGatewayOutputPort} interface.
  * It makes calls to the Rucio Auth Server.
  */
+
+let authVO = 'def'
+
 @injectable()
 class RucioAuthServer implements AuthServerGatewayOutputPort {
+    async authVO(vo: string){
+        authVO = vo
+    }
     async userpassLogin(username: string, password: string, account: string): Promise<UserPassLoginAuthServerDTO> {
         const authHost = process.env.RUCIO_AUTH_HOST
         const userpassEndpoint = '/auth/userpass'
@@ -23,7 +29,8 @@ class RucioAuthServer implements AuthServerGatewayOutputPort {
                 'X-Rucio-AppID': 'webui',
                 'X-Rucio-Username': username,
                 'X-Rucio-Password': password,
-                'X-Rucio-Account': 'root'
+                'X-Rucio-Account': 'gmatthews',
+                'X-Rucio-Vo': authVO
             },
 
         })
